@@ -6,7 +6,7 @@
 /*   By: haghbal <haghbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:08 by haghbal           #+#    #+#             */
-/*   Updated: 2023/12/31 23:22:08 by haghbal          ###   ########.fr       */
+/*   Updated: 2024/01/02 18:04:34 by haghbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,26 +81,18 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// #include <stdio.h>
-// #include <fcntl.h>
-// int main()
-// {
-// 	char *line;
-// 	int fd = open("test.txt", O_RDONLY);
-// 	int fd1 = open("testt.txt", O_RDONLY);
-// 	int i = 1;
-// 	while (i < 2)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		line = get_next_line(fd1);
-// 		printf("%s", line);
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-
-		
-// 		// printf("%s", line);
-// 		free (line);
-// 		i++;
-// 	}
-// }
+#include <stdio.h>
+#include <fcntl.h>
+int main()
+{
+	char *line;
+	int fd = open("exm.txt", O_RDONLY);
+	int i = 1;
+	while (i < 4)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free (line);
+		i++;
+	}
+}
