@@ -6,13 +6,13 @@
 /*   By: haghbal <haghbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:08 by haghbal           #+#    #+#             */
-/*   Updated: 2024/01/02 18:04:34 by haghbal          ###   ########.fr       */
+/*   Updated: 2024/01/05 17:05:39 by haghbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*get_line_buffer(int fd, char **recall, char *buf)
+static char	*get_line_buffer(int fd, char *recall, char *buf)
 {
 	int		n_byt;
 	char	*tmp;
@@ -23,21 +23,20 @@ static char	*get_line_buffer(int fd, char **recall, char *buf)
 		n_byt = read(fd, buf, BUFFER_SIZE);
 		if (n_byt == -1)
 		{
-			free((*recall));
-			*recall = 0;
+			free(recall);
 			return (NULL);
 		}
 		else if (n_byt == 0)
 			break ;
 		buf[n_byt] = '\0';
-		tmp = *recall;
-		*recall = ft_strjoin(tmp, buf);
+		tmp = recall;
+		recall = ft_strjoin(tmp, buf);
 		free(tmp);
 		tmp = NULL;
-		if (ft_strchr(*recall, '\n'))
+		if (ft_strchr(recall, '\n'))
 			break ;
 	}
-	return (*recall);
+	return (recall);
 }
 
 static char	*get_my_line(char *line)
@@ -50,7 +49,7 @@ static char	*get_my_line(char *line)
 		i++;
 	if (line[i] == '\n')
 		i++;
-	if (!line[i])
+	if (line[i] == '\0')
 		return (0);
 	recall = ft_strdup(&line[i]);
 	line[i] = '\0';
@@ -63,7 +62,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buf;
 
-	buf = malloc((sizeof(char) * (BUFFER_SIZE + 1)));
+	buf = malloc((sizeof(char) * ((size_t)BUFFER_SIZE + 1)));
 	if (!buf)
 		return (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -72,27 +71,30 @@ char	*get_next_line(int fd)
 		buf = (NULL);
 		return (NULL);
 	}
-	line = get_line_buffer(fd, &recall, buf);
+	line = get_line_buffer(fd, recall, buf);
 	free (buf);
 	buf = NULL;
 	if (line == NULL)
+	{
+		recall = 0;
 		return (NULL);
+	}
 	recall = get_my_line(line);
 	return (line);
 }
 
-#include <stdio.h>
 #include <fcntl.h>
-int main()
+#include <stdio.h>
+int main(void)
 {
+	int fd = open("test.txt", O_RDONLY);
 	char *line;
-	int fd = open("exm.txt", O_RDONLY);
-	int i = 1;
+	int i = 0;
 	while (i < 4)
 	{
-		line = get_next_line(fd);
 		printf("%s", line);
-		free (line);
+		line = get_next_line(fd);
+		free(line);
 		i++;
 	}
 }

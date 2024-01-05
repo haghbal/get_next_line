@@ -6,7 +6,7 @@
 /*   By: haghbal <haghbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 18:23:04 by haghbal           #+#    #+#             */
-/*   Updated: 2024/01/02 00:28:44 by haghbal          ###   ########.fr       */
+/*   Updated: 2024/01/02 23:43:17 by haghbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,3 @@ char	*ft_strchr(char *str, char c)
 	}
 	return (NULL);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	char s1[20] = "bonjour les ";
-// 	char s2[20] = "amis comment";
-// 	char *str = ft_strjoin(s1, s2);
-// 	printf("%s", *str);
-// }
